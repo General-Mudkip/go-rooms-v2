@@ -2,7 +2,7 @@ package utils
 
 import (
 	"go-rooms/pkg/models"
-	"log"
+	"strings"
 
 	_ "github.com/tursodatabase/libsql-client-go/libsql"
 	"gorm.io/driver/sqlite"
@@ -24,8 +24,18 @@ func ConnectDB() (*gorm.DB, error) {
 }
 
 func CreateRoomsTable(db *gorm.DB) error {
-	log.Print("in create")
 	err := db.AutoMigrate(&models.Room{})
 
 	return err
+}
+
+func DoesRoomExist(db *gorm.DB, roomPin string) bool {
+	var rooms []models.Room
+	db.Find(&rooms, "room_pin = ?", strings.TrimSpace(roomPin))
+
+	if len(rooms) != 0 {
+		return true
+	} else {
+		return false
+	}
 }

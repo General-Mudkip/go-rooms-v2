@@ -1,1 +1,29 @@
-<div>hello</div>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Go Rooms</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.3"
+        integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <main class="flex flex-col items-center justify-center h-svh">
+        HELLO!!!!
+        <button hx-put="/" hx-target="#look-me" hx-swap="innerHTML">
+            Testing testing
+        </button>
+
+        <span id="look-me">You will find information here.</span>
+
+        <span id="testing"></span>
+        <form hx-post="/api/create-room" hx-target="#testing">
+            <input id="room_name" class="border border-black" name="room_name" type="text">
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+</body>
+
+</html>

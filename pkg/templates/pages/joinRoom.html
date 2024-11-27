@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Join | Go Rooms</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.3"
+        integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <main class="flex flex-col items-center justify-center h-svh">
+        <h1>Time to join...</h1>
+        <span id="testing"></span>
+        <form hx-post="/api/join-room" hx-target="#testing">
+            <input id="room_pin" class="border border-black" name="room_pin" type="text">
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+</body>
+
+</html>
