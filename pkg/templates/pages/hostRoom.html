@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Host | Go Rooms</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.3"
+        integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
+        crossorigin="anonymous"></script>
+</head>
+
+<body class="w-4/5 mx-auto">
+    <main class="flex flex-col items-center justify-center h-svh">
+        <h1 class="text-xl font-bold">Attendance Taker 9000</h1>
+        <h1 class="text-gray-700 mb-4">Hosting Room: <span id="room-id"></span></h1>
+        <button id="get-members-button" class="p-1 border border-black" hx-target="#look-me" hx-swap="innerHTML">
+            Get all members
+        </button>
+        <div id="look-me" class="mt-4"></div>
+
+        <script>
+            document.addEventListener('htmx:afterRequest', (event) => {
+                const target = document.querySelector('#look-me');
+                if (event.detail.xhr.responseType === '' || event.detail.xhr.responseType === 'text') {
+                    try {
+                        const data = JSON.parse(event.detail.xhr.response);
+                        console.log(data)
+                        renderTable(data, target);
+                    } catch (err) {
+                        target.innerHTML = `<p class="text-red-500">Failed to parse response</p>`;
+                    }
+                }
+            });
+
+            function renderTable(data, target) {
+                members = data
+
+                if (!members || members.length === 0) {
+                    target.innerHTML = `<p class="text-gray-500">No members found for this room.</p>`;
+                    return;
+                }
+
+                let tableHTML = `
+            <p class="text-lg mb-2">Total Attendees: ${members.length}</p>
+            <table class="table-auto border-collapse border border-gray-400 w-full">
+                <thead>
+                    <tr>
+                        <th class="border border-gray-300 px-4 py-2">Name</th>
+                        <th class="border border-gray-300 px-4 py-2">Student ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+                members.forEach(member => {
+                    tableHTML += `
+                <tr>
+                    <td class="border border-gray-300 px-4 py-2">${member.Member_name}</td>
+                    <td class="border border-gray-300 px-4 py-2">${member.Member_student_id}</td>
+                </tr>
+            `;
+                });
+
+                tableHTML += `
+                </tbody>
+            </table>
+        `;
+
+                target.innerHTML = tableHTML;
+            }
+        </script>
+    </main>
+</body>
+
+<script>
+    // hx-get="/api/get-room-members/349409" 
+    const pathname = window.location.pathname; // "/host-room/123467"
+    const slug = pathname.split('/').pop(); // "123467"
+
+    document.getElementById("room-id").textContent = slug;
+    document.getElementById("get-members-button").setAttribute("hx-get", `/api/get-room-members/${slug}`) 
+</script>
+
+</html>

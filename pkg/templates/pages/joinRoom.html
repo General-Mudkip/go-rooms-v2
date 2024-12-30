@@ -13,7 +13,14 @@
     <main class="flex flex-col items-center justify-center h-svh">
         <h1>Time to join...</h1>
         <span id="testing"></span>
-        <form hx-post="/api/join-room" hx-target="#testing">
+        <form class="flex flex-col" hx-post="/api/join-room" hx-target="#testing">
+            <label for="student_name">Your Name:</label>
+            <input id="student_name" class="border border-black" name="student_name" type="text">
+
+            <label for="student_id">Your Student ID:</label>
+            <input id="student_id" class="border border-black" name="student_id" type="text">
+
+            <label for="room_pin">The Room Pin:</label>
             <input id="room_pin" class="border border-black" name="room_pin" type="text">
             <button type="submit">Submit</button>
         </form>

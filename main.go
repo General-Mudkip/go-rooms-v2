@@ -27,9 +27,11 @@ func main() {
 
 	http.HandleFunc("/", pageHandlers.HandleHome)
 	http.HandleFunc("/join-room", pageHandlers.HandleJoinRoom)
+	http.HandleFunc("/host-room/", pageHandlers.HandleHostRoom)
 
 	http.HandleFunc("/api/create-room", api.HandleCreateRoom)
 	http.HandleFunc("/api/join-room", api.HandleJoinRoom)
+	http.HandleFunc("/api/get-room-members/", api.HandleGetRoomMembers)
 
 	log.Print("Serving...")
 	http.ListenAndServe(":8080", nil)

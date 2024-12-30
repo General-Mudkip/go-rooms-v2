@@ -9,19 +9,23 @@
         crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="w-4/5 mx-auto">
     <main class="flex flex-col items-center justify-center h-svh">
-        HELLO!!!!
-        <button hx-put="/" hx-target="#look-me" hx-swap="innerHTML">
-            Testing testing
+        <h1 class="text-xl font-bold">Attendance Taker 9000</h1>
+        <h1 class="text-gray-700 mb-4">Create a Room</h1>
+        <button class="p-1 border border-black" hx-put="/" hx-target="#look-me" hx-swap="innerHTML">
+            Get all rooms
         </button>
 
-        <span id="look-me">You will find information here.</span>
+        <div class="min-h-16 bg-red-100 my-4 p-1 w-full" id="look-me"></div>
 
         <span id="testing"></span>
         <form hx-post="/api/create-room" hx-target="#testing">
+            <label>Room name</label>
             <input id="room_name" class="border border-black" name="room_name" type="text">
-            <button type="submit">Submit</button>
+            <br />
+            <button class="p-1 border border-black" onclick="window.location.href = '/host-room'"
+                type="submit">Submit</button>
         </form>
     </main>
 </body>
